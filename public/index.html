@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>🎨 ओळखा पाहू!</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%;overflow-x:hidden}
+body{font-family:'Noto Sans Devanagari',sans-serif;background:linear-gradient(160deg,#ffe29f,#ffa99f 50%,#a18cd1);background-attachment:fixed;color:#2b2350;font-size:15px}
+.hide{display:none!important}
+.bg{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.bg span{position:absolute;font-size:34px;opacity:.3;animation:fl 9s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-28px) rotate(14deg)}}
+.scr{position:relative;max-width:520px;margin:0 auto;padding:14px 12px calc(14px + env(safe-area-inset-bottom));text-align:center}
+h1{font-family:'Baloo 2','Noto Sans Devanagari',sans-serif;font-size:40px;font-weight:800;margin-top:8px}
+h2{font-size:22px;margin:6px 0}
+.tag{margin:4px 0 14px}
+.card{background:#fff;border-radius:20px;padding:14px;box-shadow:0 6px 20px #0002;margin-bottom:12px}
+input,select{width:100%;padding:12px;font-size:16px;border:2px solid #d9d2f5;border-radius:12px;font-family:inherit;background:#fff;color:#2b2350}
+.row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:10px}
+.av{width:44px;height:44px;border-radius:50%;border:3px solid transparent;font-size:24px;background:#f3f0ff}
+.av.on{border-color:#2b2350;transform:scale(1.12)}
+.co{width:32px;height:32px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px #ccc}
+.co.on{box-shadow:0 0 0 3px #2b2350}
+.big{width:100%;padding:14px;margin-top:9px;font-size:18px;font-weight:700;font-family:inherit;border:0;border-radius:14px;color:#fff;background:#6c4cf1;box-shadow:0 4px 0 #4a31b8}
+.big.a{background:#ff7a59;box-shadow:0 4px 0 #c9532f}.big.b{background:#20b486;box-shadow:0 4px 0 #148763}.big.g{background:#666;box-shadow:0 4px 0 #333}
+.big:active{transform:translateY(3px);box-shadow:none}.big:disabled{opacity:.5}
+.pr{display:flex;align-items:center;gap:8px;padding:8px 10px;margin:6px 0;background:#fff;border-radius:12px;border-left:6px solid #ccc;text-align:left;font-weight:600}
+.pr b{margin-left:auto}
+.cfg{display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:left}.cfg label{font-size:13px;font-weight:600}
+dialog{border:0;border-radius:20px;padding:18px;max-width:360px;width:90%;line-height:1.6;text-align:left}
+dialog::backdrop{background:#0006}
+.top{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:14px;padding:8px 12px;font-weight:700}
+.tm{font-size:24px;font-family:'Baloo 2',sans-serif;color:#6c4cf1}.tm.low{color:#e03131}
+#hint{font-size:24px;font-weight:700;letter-spacing:2px;margin:6px 0;min-height:34px;word-break:break-word}
+.cvw{position:relative}
+#cv{width:100%;aspect-ratio:4/3;background:#fff;border-radius:14px;box-shadow:0 4px 14px #0003;touch-action:none;display:block}
+.ov{position:absolute;inset:0;background:#fffe;border-radius:14px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;padding:12px;font-size:18px;font-weight:700}
+.ov .big{width:80%}
+.tools{background:#fff;border-radius:14px;padding:8px;margin-top:8px}
+.tools .row{margin:4px 0}.tools .co{width:30px;height:30px}
+.tools button.t{padding:10px 12px;font-size:18px;border:0;border-radius:10px;background:#efeaff}.tools button.t.on{background:#6c4cf1;color:#fff}
+.tools input[type=range]{padding:0;width:140px;border:0}
+#chat{height:150px;overflow-y:auto;background:#fff;border-radius:14px;padding:8px;text-align:left;margin:10px 0 6px;font-size:14px}
+#chat div{margin:2px 0;word-break:break-word}.sys{color:#777}.ok{color:#148763;font-weight:700}
+#cf{display:flex;gap:6px;position:sticky;bottom:0;padding:6px 0;background:transparent}
+#cf button{width:60px;border:0;border-radius:12px;background:#6c4cf1;color:#fff;font-size:20px}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#2b2350;color:#fff;padding:10px 16px;border-radius:20px;z-index:9;max-width:90%}
+.pod{font-size:60px}.cf{position:fixed;top:-5%;font-size:26px;animation:fall linear forwards;pointer-events:none;z-index:8}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden}td,th{padding:8px;font-size:14px}tr:nth-child(even){background:#f6f3ff}
+</style>
+</head>
+<body>
+<div class="bg" id="bg"></div>
+
+<div id="home" class="scr">
+  <h1>🎨 ओळखा पाहू!</h1>
+  <p class="tag">चित्र काढा, शब्द ओळखा आणि मित्रांसोबत मजा करा!</p>
+  <div class="card">
+    <input id="name" maxlength="14" placeholder="तुमचे नाव / Your name" autocomplete="off" style="text-align:center">
+    <div class="row" id="avs"></div><div class="row" id="cos"></div>
+  </div>
+  <button class="big" id="create">➕ Create Room</button>
+  <button class="big a" id="join">🔑 Join Room</button>
+  <div id="jc" class="card hide" style="margin-top:9px"><input id="rid" maxlength="8" placeholder="Room ID" style="text-align:center;text-transform:uppercase"><button class="big a" id="jgo">Join</button></div>
+  <button class="big b" id="how">❓ How to Play</button>
+  <button class="big g" id="lang">🌐 Language Settings</button>
+</div>
+
+<div id="lobby" class="scr hide"></div>
+
+<div id="game" class="scr hide">
+  <div class="top"><span id="rd"></span><span id="tm" class="tm"></span><span id="dr"></span></div>
+  <div id="hint"></div>
+  <div class="cvw"><canvas id="cv" width="800" height="600"></canvas><div id="ov" class="ov hide"></div></div>
+  <div id="tools" class="tools hide">
+    <div class="row" id="pal"></div>
+    <div class="row"><button class="t" id="eraser">🧽</button><input type="range" id="sz" min="2" max="40" value="6"><button class="t" id="undo">↩️</button><button class="t" id="redo">↪️</button><button class="t" id="clr">🗑️</button></div>
+  </div>
+  <div id="pl"></div>
+  <div id="chat"></div>
+  <form id="cf"><input id="ci" maxlength="60" autocomplete="off" placeholder="तुमचे उत्तर लिहा..."><button>➤</button></form>
+</div>
+
+<div id="end" class="scr hide"></div>
+<dialog id="dlg"><div id="dlgB"></div><button class="big" onclick="dlg.close()">ठीक आहे / OK</button></dialog>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const AV=['🦁','🐯','🦊','🐼','🐸','🦄','🐵','🐙'],CO=['#ff6b6b','#ffa94d','#ffd43b','#51cf66','#22b8cf','#4c6ef5','#be4bdb','#f06595'];
+const PAL=['#000000','#ffffff','#e03131','#f76707','#fcc419','#2f9e44','#1971c2','#7048e8','#c2255c','#8d5a2b'];
+let pf=JSON.parse(localStorage.getItem('pf')||'{}');pf.av=pf.av||AV[0];pf.col=pf.col||CO[0];pf.lang=pf.lang||'mr';
+let token=sessionStorage.getItem('tk');if(!token){token=Array.from({length:4},()=>Math.random().toString(36).slice(2)).join('');sessionStorage.setItem('tk',token)}
+let S=null,me=null,cur=null,secret=null,left=0,confDone=false;
+const sock=io();
+function toast(t){const e=document.createElement('div');e.id='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2500)}
+function showScr(id){$$('.scr').forEach(e=>e.classList.toggle('hide',e.id!==id))}
+$('#bg').innerHTML=['🎨','✏️','🖌️','⭐','🐘','🍉','🚂','🎈','🪁','🦜'].map((e,i)=>`<span style="left:${(i*10+4)%92}%;top:${(i*17+6)%88}%;animation-delay:${i*.7}s">${e}</span>`).join('');
+
+/* ---------- HOME ---------- */
+function drawHome(){
+  $('#avs').innerHTML=AV.map(a=>`<button class="av ${a==pf.av?'on':''}" data-a="${a}">${a}</button>`).join('');
+  $('#cos').innerHTML=CO.map(c=>`<button class="co ${c==pf.col?'on':''}" data-c="${c}" style="background:${c}"></button>`).join('');
+}
+$('#name').value=pf.name||'';drawHome();
+document.addEventListener('click',e=>{const d=e.target.dataset;if(d.a){pf.av=d.a;drawHome()}if(d.c){pf.col=d.c;drawHome()}});
+function prof(){const n=$('#name').value.trim();if(!n){toast('कृपया तुमचे नाव लिहा');$('#name').focus();return null}pf.name=n;localStorage.setItem('pf',JSON.stringify(pf));return pf}
+function got(res,quiet){
+  if(res.err){sessionStorage.removeItem('room');cur=null;S=null;if(!quiet)toast(res.err);showScr('home');return}
+  me=res.me;cur=res.room;sessionStorage.setItem('room',cur);history.replaceState(null,'','?room='+cur);if(S)render();
+}
+$('#create').onclick=()=>{const p=prof();if(p)sock.emit('create',{name:p.name,av:p.av,col:p.col,lang:p.lang,token},r=>got(r))};
+$('#join').onclick=()=>$('#jc').classList.toggle('hide');
+$('#jgo').onclick=()=>{const p=prof();if(!p)return;const r=$('#rid').value.trim().toUpperCase();if(!r)return toast('Room ID लिहा');sock.emit('join',{room:r,name:p.name,av:p.av,col:p.col,token},x=>got(x))};
+const q=new URLSearchParams(location.search).get('room');if(q){$('#rid').value=q.toUpperCase();$('#jc').classList.remove('hide')}
+function dlgShow(h){$('#dlgB').innerHTML=h;$('#dlg').showModal()}
+$('#how').onclick=()=>dlgShow('<b>कसे खेळायचे?</b><br>1️⃣ खोली तयार करा आणि मित्रांना लिंक पाठवा (किमान ३ खेळाडू).<br>2️⃣ एकजण दिलेल्या शब्दांपैकी एक निवडून चित्र काढतो.<br>3️⃣ बाकीचे खाली लिहून शब्द ओळखतात — जलद उत्तर, जास्त गुण!<br>4️⃣ सर्वांना चित्र काढायची संधी मिळते. शेवटी विजेता! 🏆');
+$('#lang').onclick=()=>{dlgShow('<b>शब्दांची भाषा (नवीन खोलीसाठी)</b>'+[['mr','मराठी'],['hi','हिंदी'],['en','English']].map(l=>`<button class="big ${pf.lang==l[0]?'':'g'}" data-l="${l[0]}">${l[1]}${pf.lang==l[0]?' ✔':''}</button>`).join(''))};
+document.addEventListener('click',e=>{if(e.target.dataset.l){pf.lang=e.target.dataset.l;localStorage.setItem('pf',JSON.stringify(pf));$('#dlg').close();toast('✔')}});
+
+/* ---------- SOCKET EVENTS ---------- */
+sock.on('connect',()=>{const r=cur||sessionStorage.getItem('room');if(r)sock.emit('join',{room:r,name:pf.name,av:pf.av,col:pf.col,token},x=>got(x,true))});
+sock.on('state',s=>{const pr=S;S=s;left=s.left;if(!pr||pr.phase!==s.phase||pr.drawer!==s.drawer)secret=null;if(me)render()});
+sock.on('secret',s=>{secret=s;if(S&&me)render()});
+sock.on('tick',t=>{left=t;timerUI()});
+sock.on('hint',h=>{if(S){S.hint=h;if(S.phase==='draw')hintUI()}});
+sock.on('msg',m=>addMsg(m));
+sock.on('right',r=>{addMsg({k:'ok',t:'🎉 अभिनंदन! तुम्ही योग्य शब्द ओळखला! +'+r.pts+' गुण'});toast('🎉 +'+r.pts)});
+function addMsg(m){const d=document.createElement('div');d.className=m.k;d.innerHTML=m.k==='chat'?`<b>${esc(m.n)}</b>: ${esc(m.t)}`:esc(m.t);const c=$('#chat');c.appendChild(d);c.scrollTop=c.scrollHeight}
+
+/* ---------- RENDER ---------- */
+function render(){
+  if(S.phase==='lobby'){confDone=false;showScr('lobby');lobby()}
+  else if(S.phase==='end'){showScr('end');endScr()}
+  else{showScr('game');game()}
+}
+function lobby(){
+  const h=S.host===me,c=S.set,n=S.players.filter(p=>p.on).length;
+  const sel=(id,l,opts,v)=>`<div><label>${l}</label><select id="${id}" ${h?'':'disabled'}>${opts.map(o=>`<option value="${o[0]}" ${String(o[0])==String(v)?'selected':''}>${o[1]}</option>`).join('')}</select></div>`;
+  $('#lobby').innerHTML=`<h2>🎨 खोली: <b>${S.id}</b></h2>
+  <button class="big b" id="cp">🔗 मित्रांना लिंक पाठवा</button>
+  <h2 style="margin-top:12px">खेळाडू ${S.players.length}/${c.max}</h2>
+  ${S.players.map(p=>`<div class="pr" style="border-color:${p.col}">${p.av} ${esc(p.name)} ${p.id===S.host?'👑':''}${p.on?'':' <small>(offline)</small>'}${p.id===me?'<b>तुम्ही</b>':''}</div>`).join('')}
+  <div class="card cfg" id="cfg" style="margin-top:10px">
+   ${sel('s_time','वेळ (सेकंद)',[[40,40],[60,60],[80,80],[100,100],[120,120],[150,150]],c.time)}
+   ${sel('s_rounds','फेऱ्या',[1,2,3,4,5].map(x=>[x,x]),c.rounds)}
+   ${sel('s_max','कमाल खेळाडू',[3,4,6,8,10,12].map(x=>[x,x]),c.max)}
+   ${sel('s_diff','शब्द पातळी',[['mix','मिश्र'],['e','सोपे'],['m','मध्यम'],['h','कठीण']],c.diff)}
+   ${sel('s_lang','भाषा',[['mr','मराठी'],['hi','हिंदी'],['en','English']],c.lang)}
+  </div>
+  ${h?`<button class="big" id="st" ${n<3?'disabled':''}>▶️ खेळ सुरू करा</button>${n<3?'<p>किमान ३ खेळाडू हवेत</p>':''}`:'<p>होस्ट खेळ सुरू करेल... ⏳</p>'}
+  <button class="big g" id="lv">🚪 Leave Room</button>`;
+}
+document.addEventListener('change',e=>{if(e.target.closest('#cfg')&&S)sock.emit('set',{time:$('#s_time').value,rounds:$('#s_rounds').value,max:$('#s_max').value,diff:$('#s_diff').value,lang:$('#s_lang').value})});
+document.addEventListener('click',e=>{
+  const id=e.target.id;
+  if(id==='cp'){const u=location.origin+'/?room='+S.id;if(navigator.share)navigator.share({title:'🎨 ओळखा पाहू!',text:'माझ्या खोलीत या! Room: '+S.id,url:u}).catch(()=>{});else{try{navigator.clipboard.writeText(u);toast('लिंक कॉपी झाली!')}catch(x){toast(u)}}}
+  if(id==='st')sock.emit('start');
+  if(id==='lv'||id==='home2')leave();
+  if(id==='again')sock.emit('again');
+  if(id==='new2'){leave();setTimeout(()=>$('#create').click(),100)}
+  if(e.target.dataset.w!==undefined)sock.emit('pick',+e.target.dataset.w);
+});
+function leave(){sock.emit('leave');cur=null;S=null;me=null;secret=null;sessionStorage.removeItem('room');history.replaceState(null,'','/');showScr('home')}
+
+function timerUI(){const t=$('#tm');t.textContent=S&&S.phase==='draw'?'⏱ '+Math.max(left,0):'⏳';t.classList.toggle('low',S&&S.phase==='draw'&&left<=10)}
+function hintUI(){const d=S.drawer===me;$('#hint').textContent=S.phase==='draw'?(d&&secret&&secret.word?'चित्र काढा: '+secret.word:'शब्द: '+S.hint):''}
+function game(){
+  const isD=S.drawer===me,dr=S.players.find(p=>p.id===S.drawer)||{name:''};
+  $('#rd').textContent=`फेरी ${S.round}/${S.set.rounds}`;$('#dr').textContent='✏️ '+dr.name;timerUI();hintUI();
+  const ov=$('#ov');let h='';
+  if(S.phase==='choose'){h=isD&&secret&&secret.choices?'<div>शब्द निवडा 👇</div>'+secret.choices.map((w,i)=>`<button class="big" data-w="${i}">${esc(w)}</button>`).join(''):`<div>✏️ ${esc(dr.name)} शब्द निवडत आहे...</div>`}
+  if(S.phase==='reveal')h=`<div>✅ शब्द होता:</div><div style="font-size:30px">${esc(S.answer||'')}</div>`;
+  ov.innerHTML=h;ov.classList.toggle('hide',!h);
+  $('#tools').classList.toggle('hide',!(isD&&S.phase==='draw'));
+  const ci=$('#ci');ci.disabled=isD&&S.phase==='draw';ci.placeholder=ci.disabled?'तुम्ही चित्र काढत आहात ✏️':'तुमचे उत्तर लिहा...';
+  $('#pl').innerHTML=[...S.players].sort((a,b)=>b.score-a.score).map((p,i)=>`<div class="pr" style="border-color:${p.col};${p.on?'':'opacity:.5'}">${i+1}. ${p.av} ${esc(p.name)} ${p.id===S.drawer?'✏️':''}${p.guessed?'✅':''}<b>${p.score}</b></div>`).join('');
+}
+$('#cf').onsubmit=e=>{e.preventDefault();const t=$('#ci').value.trim();if(t){sock.emit('guess',t);$('#ci').value=''}};
+
+function endScr(){
+  const r=[...S.players].sort((a,b)=>b.score-a.score),m=['🥇','🥈','🥉'],isH=S.host===me;
+  $('#end').innerHTML=`<h1>🏆 विजेता!</h1><div class="pod">${r[0].av}</div><h2>${esc(r[0].name)} — ${r[0].score}</h2>
+  <div class="card" style="margin-top:10px"><table><tr><th></th><th>खेळाडू</th><th>गुण</th><th>बरोबर</th></tr>${r.map((p,i)=>`<tr><td>${m[i]||i+1}</td><td>${p.av} ${esc(p.name)}</td><td><b>${p.score}</b></td><td>${p.ok}</td></tr>`).join('')}</table></div>
+  ${isH?'<button class="big" id="again">🔄 Play Again</button>':'<p>होस्ट पुन्हा खेळ सुरू करेल...</p>'}
+  <button class="big a" id="home2">🏠 Return to Home</button><button class="big b" id="new2">➕ Create New Room</button>`;
+  if(!confDone){confDone=true;for(let i=0;i<60;i++){const d=document.createElement('div');d.className='cf';d.textContent=['🎉','🎊','✨','⭐'][i%4];d.style.left=Math.random()*100+'%';d.style.animationDuration=2+Math.random()*3+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),5500)}}
+}
+
+/* ---------- CANVAS ---------- */
+const cv=$('#cv'),g=cv.getContext('2d');g.lineCap='round';g.lineJoin='round';
+let tool={c:'#000000',s:6,e:false},drawing=false,last=null,buf=[],rs=null,rl=null;
+const wipe=()=>{g.fillStyle='#fff';g.fillRect(0,0,800,600)};wipe();
+function line(st,a,b){g.strokeStyle=st.e?'#fff':st.c;g.lineWidth=st.s;g.beginPath();g.moveTo(a[0],a[1]);g.lineTo(b[0]+.01,b[1]);g.stroke()}
+function redraw(list){wipe();for(const s of list){let l=s.p[0];line(s,l,l);for(const p of s.p.slice(1)){line(s,l,p);l=p}}}
+sock.on('canvas',redraw);
+sock.on('st',s=>{rs=s;rl=s.p[0];line(s,rl,rl)});
+sock.on('sp',pts=>{if(!rs)return;for(const p of pts){line(rs,rl,p);rl=p}});
+const canDraw=()=>S&&S.phase==='draw'&&S.drawer===me;
+const pos=e=>{const r=cv.getBoundingClientRect();return[Math.round((e.clientX-r.left)/r.width*800),Math.round((e.clientY-r.top)/r.height*600)]};
+function flush(){if(buf.length){sock.emit('sp',buf);buf=[]}}
+cv.onpointerdown=e=>{if(!canDraw())return;e.preventDefault();cv.setPointerCapture(e.pointerId);drawing=true;last=pos(e);line(tool,last,last);sock.emit('st',{c:tool.c,s:tool.s,e:tool.e,p:last});buf=[]};
+cv.onpointermove=e=>{if(!drawing)return;e.preventDefault();const p=pos(e);line(tool,last,p);last=p;buf.push(p);if(buf.length>=4)flush()};
+cv.onpointerup=cv.onpointercancel=()=>{if(drawing){drawing=false;flush()}};
+$('#pal').innerHTML=PAL.map(c=>`<button class="co ${c==tool.c?'on':''}" data-p="${c}" style="background:${c}"></button>`).join('');
+$('#tools').addEventListener('click',e=>{
+  const p=e.target.dataset.p;if(p){tool.c=p;tool.e=false;$('#eraser').classList.remove('on');$$('#pal .co').forEach(b=>b.classList.toggle('on',b.dataset.p===p))}
+});
+$('#eraser').onclick=()=>{tool.e=!tool.e;$('#eraser').classList.toggle('on',tool.e)};
+$('#sz').oninput=e=>tool.s=+e.target.value;
+$('#undo').onclick=()=>sock.emit('undo');$('#redo').onclick=()=>sock.emit('redo');
+$('#clr').onclick=()=>{if(confirm('कॅनव्हास पुसायचा?'))sock.emit('clear')};
+</script>
+</body>
+</html>
